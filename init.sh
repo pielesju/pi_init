@@ -8,7 +8,7 @@ function pretty_print {
 }
 
 # check if script is run as root (uid 0)
-function fail_if_not_root {
+function check_if_root {
     if [[ $EUID -ne 0 ]]; then
         echo "Error: This script must be run as root. Please use: sudo $0" 1>&2
         exit 1
