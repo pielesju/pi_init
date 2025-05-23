@@ -1,0 +1,22 @@
+<VirtualHost *:443>
+    ServerName {{ apache_domain }}
+    ServerAdmin {{ apache_admin_email }}
+
+    DocumentRoot {{ apache_docroot }}
+    DirectoryIndex index.html index.php
+
+    <Directory "{{ apache_docroot }}">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ apache_domain }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ apache_domain }}_access.log combined
+
+    SSLEngine on
+    SSLCertificateFile {{ apache_ssl_cert_path }}
+    SSLCertificateKeyFile {{ apache_ssl_key_path }}
+
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</VirtualHost>

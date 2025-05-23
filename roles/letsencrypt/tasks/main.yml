@@ -1,0 +1,25 @@
+---
+- name: Install required packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - certbot
+    - python3-certbot-apache
+
+- name: Obtain certificate using certbot webserver plugin
+  ansible.builtin.command: >
+    certbot --apache
+    --non-interactive
+    --agree-tos
+    --email {{ certbot_email }}
+    -d {{ certbot_domains | join(',') }}
+  notify: Restart Webserver
+
+- name: Setup cronjob for renewal
+  cron:
+    name: "auto-renew let's encrypt certificates"
+    job: "/usr/bin/certbot renew --quiet"
+    minute: 0
+    hour: 3
+    user: root

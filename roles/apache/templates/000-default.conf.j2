@@ -1,0 +1,4 @@
+<VirtualHost *:80>
+    ServerName {{ apache_domain }}
+    Redirect permanent / https://{{ apache_domain }}
+</VirtualHost>

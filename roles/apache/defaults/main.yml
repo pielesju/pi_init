@@ -1,0 +1,6 @@
+---
+apache_domain: "cofezuwo.org"
+apache_admin_email: "admin@cofezuwo.org"
+apache_docroot: "/var/www/cofezuwo.org"
+apache_ssl_cert_path: "/etc/letsencrypt/live/{{ apache_domain }}/fullchain.pem"
+apache_ssl_key_path: "/etc/letsencrypt/live/{{ apache_domain }}/privkey.pem"

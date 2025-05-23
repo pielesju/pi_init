@@ -1,0 +1,48 @@
+---
+- name: Install required packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apache2
+
+- name: Enable necessary apache modules
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ssl
+    - headers
+    - rewrite
+
+- name: Create DocumentRoot directory
+  ansible.builtin.file:
+    path: "{{ apache_docroot }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Deploy SSL virtual host configuration
+  ansible.builtin.template:
+    src: 001-cofezuwo.org.conf.j2
+    dest: "/etc/apache2/sites-available/001-{{ apache_domain }}-ssl.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload Apache
+
+- name: Deploy Port 80 virtual host configuration
+  ansible.builtin.template:
+    src: 000-default.conf.j2
+    dest: "/etc/apache2/sites-available/000-default.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload Apache
+
+- name: Enable SSL virtual host
+  ansible.builtin.command: a2ensite 001-{{ apache_domain }}-ssl.conf
+  args:
+    creates: "/etc/apache2/sites-enabled/001-{{ apache_domain }}-ssl.conf"
+  notify: Reload Apache

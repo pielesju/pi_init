@@ -3,11 +3,8 @@
   hosts: localhost
   force_handlers: true
   gather_facts: true
-
-  tasks:
-    - name: Test Task
-      debug:
-        msg: "Hello World"
   
   roles:
     - role: admin_tools
+    - role: letsencrypt
+    - role: apache
