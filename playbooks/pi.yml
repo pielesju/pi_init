@@ -6,5 +6,5 @@
   
   roles:
     - role: admin_tools
-    - role: letsencrypt
     - role: apache
+    - role: letsencrypt

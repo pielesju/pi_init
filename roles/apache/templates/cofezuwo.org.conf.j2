@@ -1,3 +1,9 @@
+<VirtualHost *:80>
+    ServerName {{ apache_domain }}
+    ServerAlias www.{{ apache_domain }}
+    Redirect permanent / https://cofezuwo.org/
+</VirtualHost>
+
 <VirtualHost *:443>
     ServerName {{ apache_domain }}
     ServerAlias www.{{ apache_domain }}
