@@ -13,6 +13,7 @@
     --non-interactive
     --agree-tos
     --email {{ certbot_email }}
+    --expand
     -d {{ certbot_domains | join(',') }}
   notify: Restart Webserver
 

@@ -2,9 +2,11 @@
 
 # print function for headlines
 function pretty_print {
+  echo ""
   echo "=================================================="
-  echo " $1"
+  echo " rPi Init: $1"
   echo "=================================================="
+  echo ""
 }
 
 # check if script is run as root (uid 0)
@@ -45,9 +47,22 @@ function run_playbook {
     popd &>/dev/null
 }
 
+function print_logo {
+    echo "     .~~.   .~~.                   "
+    echo "    '. \\ ' ' / .'                  "
+    echo "     .~ .~~~..~.                   "
+    echo "    : .~.'~'.~. :                  "
+    echo "   ~ (   ) (   ) ~                 "
+    echo "  ( : '~'.~.'~' : )                "
+    echo "   ~ .~ (   ) ~. ~                 "
+    echo "    (  : '~' :  ) Raspberry Pi Init"
+    echo "     '~ .~~~. ~'                   "
+    echo "         '~'                       "
+}
+
 function main {
-    pretty_print "Raspberry Pi Init"
     check_if_root
+    print_logo
     install_dependencies
     clone_git_repo
     run_playbook
