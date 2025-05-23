@@ -6,5 +6,6 @@
   
   roles:
     - role: admin_tools
+    - role: docker
     - role: apache
     - role: letsencrypt

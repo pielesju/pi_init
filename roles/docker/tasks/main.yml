@@ -1,8 +1,8 @@
 ---
-- name: Install admin packages
+- name: Install required packages
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
   loop:
-    - vim
-    - curl
+    - docker.io
+    - docker-compose

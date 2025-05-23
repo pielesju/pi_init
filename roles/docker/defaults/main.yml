@@ -1,0 +1,5 @@
+---
+docker_apt_repo: "deb [arch=armhf] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+docker_compose_path: "/usr/local/bin/docker-compose"
+docker_users:
+  - elliot
