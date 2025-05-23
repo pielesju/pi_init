@@ -29,8 +29,14 @@ function install_dependencies {
 
 function clone_git_repo {
     pretty_print "clone git repository..."
-
-    git clone https://github.com/pielesju/pi_init.git
+    
+    if [[ ! -d pi_init ]]; then
+        git clone https://github.com/pielesju/pi_init.git
+    else
+        pushd pi_init &>/dev/null
+        git pull
+        popd &>/dev/null
+    fi
 }
 
 function run_playbook {
