@@ -1,5 +1,6 @@
 <VirtualHost *:443>
     ServerName {{ apache_domain }}
+    ServerAlias www.{{ apache_domain }}
     ServerAdmin {{ apache_admin_email }}
 
     DocumentRoot {{ apache_docroot }}
