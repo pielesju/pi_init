@@ -7,6 +7,14 @@
     - vim
     - curl
     - ufw
+    - fail2ban
+    - monit
+
+- name: Install Netdata via kickstart script
+  ansible.builtin.shell: |
+    bash <(curl -Ss https://get.netdata.cloud/kickstart.sh) --dont-wait
+  args:
+    executable: /bin/bash
 
 - name: Set default incoming policy
   ufw:
