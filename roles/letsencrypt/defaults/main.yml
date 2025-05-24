@@ -5,3 +5,5 @@ certbot_domains:
   - "www.cofezuwo.org"
   - "git.cofezuwo.org"
   - "www.git.cofezuwo.org"
+  - "cloud.cofezuwo.org"
+  - "www.cloud.cofezuwo.org"

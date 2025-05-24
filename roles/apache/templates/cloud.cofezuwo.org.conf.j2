@@ -1,0 +1,29 @@
+<VirtualHost *:80>
+    ServerName cloud.{{ apache_domain }}
+    ServerAlias www.cloud.{{ apache_domain }}
+    Redirect permanent / https://cloud.cofezuwo.org/
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName cloud.{{ apache_domain }}
+    ServerAlias www.cloud.{{ apache_domain }}
+    ServerAdmin {{ apache_admin_email }}
+
+    DocumentRoot /var/www/nextcloud
+    DirectoryIndex index.html index.php
+
+    <Directory /var/www/nextcloud>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ apache_domain }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ apache_domain }}_access.log combined
+
+    SSLEngine on
+    SSLCertificateFile {{ apache_ssl_cert_path }}
+    SSLCertificateKeyFile {{ apache_ssl_key_path }}
+
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</VirtualHost>
