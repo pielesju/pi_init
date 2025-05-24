@@ -4,6 +4,8 @@
     name: "{{ item }}"
     state: present
   loop:
+    - htop
+    - neofetch
     - vim
     - curl
     - ufw
