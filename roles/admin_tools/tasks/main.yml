@@ -6,3 +6,28 @@
   loop:
     - vim
     - curl
+    - ufw
+
+- name: Set default incoming policy
+  ufw:
+    direction: incoming
+    policy: "deny"
+
+- name: Set default outgoing policy
+  ufw:
+    direction: outgoing
+    policy: "allow"
+
+- name: Allow selected ports
+  ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ ufw_allowed_ports }}"
+
+- name: Enable ufw
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+    logging: on
