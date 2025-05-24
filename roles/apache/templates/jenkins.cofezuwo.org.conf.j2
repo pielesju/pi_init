@@ -1,0 +1,31 @@
+<VirtualHost *:80>
+    ServerName jenkins.{{ apache_domain }}
+    ServerAlias www.jenkins.{{ apache_domain }}
+    Redirect permanent / https://jenkins.cofezuwo.org/
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName jenkins.{{ apache_domain }}
+    ServerAlias www.jenkins.{{ apache_domain }}
+    ServerAdmin {{ apache_admin_email }}
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ apache_domain }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ apache_domain }}_access.log combined
+
+    SSLEngine on
+    SSLCertificateFile {{ apache_ssl_cert_path }}
+    SSLCertificateKeyFile {{ apache_ssl_key_path }}
+
+    ProxyPreserveHost On
+    ProxyRequests Off
+    AllowEncodedSlashes NoDecode
+
+    ProxyPass / http://localhost:8080/ nocanon
+    ProxyPassReverse / http://localhost:8080/
+
+    <Proxy *>
+        Require all granted
+    </Proxy>
+
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</VirtualHost>

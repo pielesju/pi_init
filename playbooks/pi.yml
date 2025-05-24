@@ -8,4 +8,5 @@
     - role: admin_tools
     - role: docker
     - role: apache
+    - role: jenkins
     - role: letsencrypt

@@ -14,6 +14,8 @@
     - ssl
     - headers
     - rewrite
+    - proxy
+    - proxy_http
 
 - name: Create DocumentRoot directory
   ansible.builtin.file:
@@ -50,6 +52,15 @@
     mode: '0644'
   notify: Reload Apache
 
+- name: Deploy jenkins SSL virtual host configuration
+  ansible.builtin.template:
+    src: jenkins.cofezuwo.org.conf.j2
+    dest: "/etc/apache2/sites-available/jenkins.{{ apache_domain }}.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload Apache
+
 - name: Enable SSL virtual host
   ansible.builtin.command: a2ensite {{ apache_domain }}.conf
   args:
@@ -66,6 +77,12 @@
   ansible.builtin.command: a2ensite cloud.{{ apache_domain }}.conf
   args:
     creates: "/etc/apache2/sites-enabled/cloud.{{ apache_domain }}.conf"
+  notify: Reload Apache
+
+- name: Enable jenkins SSL virtual host
+  ansible.builtin.command: a2ensite jenkins.{{ apache_domain }}.conf
+  args:
+    creates: "/etc/apache2/sites-enabled/jenkins.{{ apache_domain }}.conf"
   notify: Reload Apache
 
 - name: Disable default virtual host

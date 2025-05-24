@@ -1,0 +1,29 @@
+---
+- name: Install required packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - openjdk-17-jdk
+    - gnupg2
+
+- name: Add Jenkins GPG key
+  apt_key:
+    url: https://pkg.jenkins.io/debian/jenkins.io-2023.key
+    state: present
+
+- name: Add Jenkins apt repository
+  apt_repository:
+    repo: deb https://pkg.jenkins.io/debian binary/
+    state: present
+
+- name: Install Jenkins
+  ansible.builtin.package:
+    name: jenkins
+    state: present
+
+- name: Ensure Jenkins is started and enabled
+  systemd:
+    name: jenkins
+    state: started
+    enabled: true
